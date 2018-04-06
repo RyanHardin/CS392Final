@@ -1,6 +1,12 @@
 // http://ionicframework.com/docs/theming/
 
 
+.background {
+    background: color($colors, primary);
+    color: color($colors, light);
+    margin-top: 20px;
+}
+
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
