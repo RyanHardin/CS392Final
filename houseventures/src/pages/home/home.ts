@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ApiProvider } from '../../providers/api/api';
 
 @Component({
   selector: 'page-home',
@@ -9,18 +9,20 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 export class HomePage {
 
   coins: any;
+  test: any;
 
-  constructor(public navCtrl: NavController, private http: HttpClient) {
-
+  constructor(public navCtrl: NavController, public ApiProvider: ApiProvider) {
+    this.ApiProvider.getTopCoins().subscribe((res: res) => {
+    //console.log(res.Data);
+    this.coins = res.Data;
+    console.log(this.coins);
+    console.log(this.coins[2]);
+    this.test = this.coins[2];
+   })
   }
 
   ionViewDidLoad() {
-    console.log('The home page has loaded')
-    this.http.get('https://min-api.cryptocompare.com/data/top/volumes?tsym=USD&limit=20').subscribe((res: res) => {
-    console.log(res)
-    this.coins = res.Data;
-    console.log(this.coins);
-    })
+
   }
 
   navigateToCoinDetailsPage(coin) {
@@ -31,6 +33,6 @@ export class HomePage {
 
 }
 export interface res {
-  Data: any;
+  Data: any[];
 
 }
