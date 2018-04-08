@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { Chart } from 'chart.js';
@@ -20,11 +20,42 @@ import * as moment from 'moment';
 })
 export class CoinDetailsPage {
 
+@ViewChild('dailyLineCanvas') dailyLineCanvas;
+
+
   coin: any;
   symbol: any;
   name: any;
   supply: any;
   price: any;
+
+  dailyLineChart: any;
+  dailyData;
+  dailyDates;
+  dailyCoinCost;
+
+  CreateDailyChart(){
+    this.dailyLineChart = new Chart(this.dailyLineCanvas.nativeElement, {
+            type: 'line',
+            data: {
+                labels: this.dailyDates,
+                datasets: [{
+                       data: this.dailyCoinCost,
+                       label: "Coin Cost",
+                       borderColor: "#3e95cd",
+                       fill: false
+                     }
+                   ]
+            },
+            options: {
+              title: {
+                    display: true,
+                    text: 'Daily Coin Prices'
+                  }
+            }
+
+        });
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ApiProvider: ApiProvider) {
     //console.log(this.navParams.get('coin'));
@@ -42,6 +73,23 @@ export class CoinDetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoindetailsPage');
+
+    this.ApiProvider.getMonthlyCoinData(this.symbol).subscribe((res: res) => {
+      console.log(res)
+      this.dailyData = res.Data;
+      var t = _.map(this.dailyData, 'time');
+      this.dailyDates = t.map(function(v) {
+        return moment(v*1000).format('MMM DD');
+      });
+      console.log(t);
+      this.dailyCoinCost = _.map(this.dailyData,'close');
+      this.CreateDailyChart();
+    });
   }
+
+}
+
+export interface res {
+  Data: any[];
 
 }

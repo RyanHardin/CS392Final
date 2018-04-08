@@ -10,9 +10,6 @@
             <ion-list class="coins-list" *ngIf="coins">
               <ion-item-group>
                 <ion-item-divider color="light">Coin Watch List</ion-item-divider>
-                <ion-item text-wrap>
-                    <ion-label>Coin Name: {{test.FULLNAME}}, Symbol: {{test.SYMBOL}}</ion-label>
-                </ion-item>
                 <ion-item text-wrap *ngFor="let coin of coins" class="coin-item" (click)="navigateToCoinDetailsPage(coin)">
                   <ion-label>Coin Name: {{coin.FULLNAME}}, Symbol: {{coin.SYMBOL}}</ion-label>
                 </ion-item>

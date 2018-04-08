@@ -28,4 +28,9 @@ export class ApiProvider {
       return this.http.get('https://min-api.cryptocompare.com/data/price?fsym=' +symbol+'&tsyms=USD,EUR,CAD');
     }
   }
+
+  getMonthlyCoinData(symbol) {
+    return this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym='+symbol+'&tsym=USD&limit=30');
+  }
+
 }
