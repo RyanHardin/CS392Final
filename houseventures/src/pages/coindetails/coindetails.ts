@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { Chart } from 'chart.js';
+import { Storage } from '@ionic/storage';
 import * as _ from "lodash";
 import * as moment from 'moment';
 
@@ -20,7 +21,8 @@ import * as moment from 'moment';
 })
 export class CoinDetailsPage {
 
-@ViewChild('dailyLineCanvas') dailyLineCanvas;
+@ViewChild('monthlyLineCanvas') monthlyLineCanvas;
+@ViewChild('weeklyLineCanvas') weeklyLineCanvas;
 
 
   coin: any;
@@ -29,18 +31,23 @@ export class CoinDetailsPage {
   supply: any;
   price: any;
 
-  dailyLineChart: any;
-  dailyData;
-  dailyDates;
-  dailyCoinCost;
+  monthlyLineChart: any;
+  monthlyData;
+  monthlyDates;
+  monthlyCoinCost;
 
-  CreateDailyChart(){
-    this.dailyLineChart = new Chart(this.dailyLineCanvas.nativeElement, {
+  weeklyLineChart: any;
+  weeklyData;
+  weeklyDates;
+  weeklyCoinCost;
+
+  CreateMonthlyChart(){
+    this.monthlyLineChart = new Chart(this.monthlyLineCanvas.nativeElement, {
             type: 'line',
             data: {
-                labels: this.dailyDates,
+                labels: this.monthlyDates,
                 datasets: [{
-                       data: this.dailyCoinCost,
+                       data: this.monthlyCoinCost,
                        label: "Coin Cost",
                        borderColor: "#3e95cd",
                        fill: false
@@ -50,14 +57,37 @@ export class CoinDetailsPage {
             options: {
               title: {
                     display: true,
-                    text: 'Daily Coin Prices'
+                    text: 'Monthly Coin Prices'
                   }
             }
 
         });
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ApiProvider: ApiProvider) {
+  CreateWeeklyChart(){
+    this.weeklyLineChart = new Chart(this.weeklyLineCanvas.nativeElement, {
+            type: 'line',
+            data: {
+                labels: this.weeklyDates,
+                datasets: [{
+                       data: this.weeklyCoinCost,
+                       label: "Coin Cost",
+                       borderColor: "#3e95cd",
+                       fill: false
+                     }
+                   ]
+            },
+            options: {
+              title: {
+                    display: true,
+                    text: 'Weekly Coin Prices'
+                  }
+            }
+
+        });
+  }
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ApiProvider: ApiProvider, private storage: Storage) {
     //console.log(this.navParams.get('coin'));
     this.coin = this.navParams.get('coin');
     this.symbol = this.coin.SYMBOL;
@@ -71,19 +101,35 @@ export class CoinDetailsPage {
   })
 }
 
+addToWatchlist(coin) {
+
+}
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoindetailsPage');
 
     this.ApiProvider.getMonthlyCoinData(this.symbol).subscribe((res: res) => {
       console.log(res)
-      this.dailyData = res.Data;
-      var t = _.map(this.dailyData, 'time');
-      this.dailyDates = t.map(function(v) {
+      this.monthlyData = res.Data;
+      var t = _.map(this.monthlyData, 'time');
+      this.monthlyDates = t.map(function(v) {
         return moment(v*1000).format('MMM DD');
       });
       console.log(t);
-      this.dailyCoinCost = _.map(this.dailyData,'close');
-      this.CreateDailyChart();
+      this.monthlyCoinCost = _.map(this.monthlyData,'close');
+      this.CreateMonthlyChart();
+    });
+
+    this.ApiProvider.getWeeklyCoinData(this.symbol).subscribe((res: res) => {
+      console.log(res)
+      this.weeklyData = res.Data;
+      var t = _.map(this.weeklyData, 'time');
+      this.weeklyDates = t.map(function(v) {
+        return moment(v*1000).format('MMM DD');
+      });
+      console.log(t);
+      this.weeklyCoinCost = _.map(this.weeklyData,'close');
+      this.CreateWeeklyChart();
     });
   }
 

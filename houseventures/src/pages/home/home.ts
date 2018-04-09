@@ -9,15 +9,12 @@ import { ApiProvider } from '../../providers/api/api';
 export class HomePage {
 
   coins: any;
-  test: any;
 
   constructor(public navCtrl: NavController, public ApiProvider: ApiProvider) {
     this.ApiProvider.getTopCoins().subscribe((res: res) => {
     //console.log(res.Data);
     this.coins = res.Data;
     console.log(this.coins);
-    console.log(this.coins[2]);
-    this.test = this.coins[2];
    })
   }
 

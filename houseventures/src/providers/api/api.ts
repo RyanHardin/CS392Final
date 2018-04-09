@@ -32,5 +32,8 @@ export class ApiProvider {
   getMonthlyCoinData(symbol) {
     return this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym='+symbol+'&tsym=USD&limit=30');
   }
+  getWeeklyCoinData(symbol) {
+    return this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym='+symbol+'&tsym=USD&limit=7');
+  }
 
 }

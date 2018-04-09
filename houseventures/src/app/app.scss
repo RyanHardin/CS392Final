@@ -6,7 +6,15 @@
     color: color($colors, light);
     margin-top: 20px;
 }
-
+ion-card{
+    height: 90%;
+}
+.header-divider {
+    text-align: center;
+}
+ion-title {
+    text-align: center;
+}
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
