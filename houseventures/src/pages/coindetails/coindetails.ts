@@ -104,9 +104,20 @@ export class CoinDetailsPage {
 addToWatchlist(coin) {
   var list;
   this.storage.get('watchlist').then((watchlist) => {
-    console.log('The watchlist is currently' + watchlist);
-    var arr = JSON.parse(watchlist);
-    arr.push(coin);
+    if(watchlist) {
+      console.log('The watchlist is currently' + watchlist);
+      let arr = JSON.parse(watchlist);
+      arr.push(coin);
+      list = JSON.stringify(arr);
+      console.log('The list is now: ' + list);
+      this.storage.set('watchlist', list);
+    }else {
+      let arr = [];
+      arr.push(coin);
+      list = JSON.stringify(arr);
+      this.storage.set('watchlist', list);
+    }
+    
   })
 }
 

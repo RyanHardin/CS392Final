@@ -23,12 +23,13 @@
           <p ion-text color="light">The {{name}} supply is currently {{supply}}.</p>
           <p ion-text color="light">The {{name}} price is currently {{price.USD}} dollars, {{price.EUR}} euros, and {{price.BTC}} bitcoins.</p>
 
-          <canvas #weeklyLineCanvas ></canvas>
-          <br />
-          <br />
-          <canvas #monthlyLineCanvas ></canvas>
-
-          <button ion-button  outline class="watchbutton" >Add to Watchlist</button>
+          <div>
+            <canvas #weeklyLineCanvas ></canvas>
+            <br />
+            <br />
+            <canvas #monthlyLineCanvas ></canvas>
+            <button ion-button  outline class="watchbutton" (click)="addToWatchlist(coin)">Add to Watchlist</button>
+          </div>
         </div>
     
       </ion-card>

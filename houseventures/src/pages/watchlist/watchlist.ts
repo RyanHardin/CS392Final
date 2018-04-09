@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import * as _ from "lodash";
+
 
 /**
  * Generated class for the WatchlistPage page.
@@ -16,8 +19,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class WatchListPage {
 
   coins: any;
+  nocoins: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+    this.storage.get('watchlist').then((watchlist) => {
+      if(watchlist) {
+        console.log('The watchlist is currently' + watchlist);
+        this.coins = JSON.parse(watchlist);
+      }else {
+        this.nocoins = true;
+      }
+    })
   }
 
   ionViewDidLoad() {
