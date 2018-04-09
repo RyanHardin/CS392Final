@@ -87,7 +87,7 @@ export class CoinDetailsPage {
         });
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ApiProvider: ApiProvider, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ApiProvider: ApiProvider, public storage: Storage) {
     //console.log(this.navParams.get('coin'));
     this.coin = this.navParams.get('coin');
     this.symbol = this.coin.SYMBOL;
@@ -102,7 +102,12 @@ export class CoinDetailsPage {
 }
 
 addToWatchlist(coin) {
-
+  var list;
+  this.storage.get('watchlist').then((watchlist) => {
+    console.log('The watchlist is currently' + watchlist);
+    var arr = JSON.parse(watchlist);
+    arr.push(coin);
+  })
 }
 
   ionViewDidLoad() {
