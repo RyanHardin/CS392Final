@@ -15,6 +15,10 @@
 
 <ion-content class="background">
 
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     <ion-card class="coins-card">
             <ion-list class="coins-list" *ngIf="coins">
               <ion-item-group>
