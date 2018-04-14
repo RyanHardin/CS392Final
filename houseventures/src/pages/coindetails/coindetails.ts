@@ -117,7 +117,6 @@ addToWatchlist(coin) {
       list = JSON.stringify(arr);
       this.storage.set('watchlist', list);
     }
-    
   })
 }
 

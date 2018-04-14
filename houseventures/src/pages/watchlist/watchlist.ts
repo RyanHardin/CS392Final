@@ -25,6 +25,14 @@ export class WatchListPage {
     console.log('Begin async operation', refresher);
 
     setTimeout(() => {
+      this.storage.get('watchlist').then((watchlist) => {
+        if(watchlist) {
+          console.log('The watchlist is currently' + watchlist);
+          this.coins = JSON.parse(watchlist);
+        }else {
+          this.nocoins = true;
+        }
+      })
       console.log('Async operation has ended');
       refresher.complete();
     }, 2000);

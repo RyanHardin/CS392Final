@@ -15,6 +15,10 @@ export class HomePage {
     console.log('Begin async operation', refresher);
 
     setTimeout(() => {
+      this.ApiProvider.getTopCoins().subscribe((res: res) => {
+        this.coins = res.Data;
+        console.log(this.coins);
+       })
       console.log('Async operation has ended');
       refresher.complete();
     }, 2000);
