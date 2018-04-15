@@ -24,10 +24,13 @@
               <ion-item-group>
                 <ion-item-divider color="light">Coin Watch List</ion-item-divider>
                 <ion-item text-wrap *ngFor="let coin of coins" class="coin-item" (click)="navigateToCoinDetailsPage(coin)">
+                    <ion-item-options side="left">
+                        <button ion-button color="danger" (click)="delete(coin)">Delete</button>
+                    </ion-item-options>
                   <ion-label>Coin Name: {{coin.FULLNAME}}, Symbol: {{coin.SYMBOL}}</ion-label>
                 </ion-item>
               </ion-item-group>
             </ion-list>
     </ion-card>
-    
+
 </ion-content>

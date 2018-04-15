@@ -101,17 +101,39 @@ export class CoinDetailsPage {
   })
 }
 
+ findObjectByKey(array, key, value) {
+  var cont = true; 
+  for (var i = 0; i < array.length; i++) {
+      if (array[i][key] === value) {
+        cont = true;
+        break;
+      } else{
+        cont = false;
+      }
+  }
+  return cont;
+ }
+
 addToWatchlist(coin) {
   var list;
+
   this.storage.get('watchlist').then((watchlist) => {
-    if(watchlist) {
+    if(watchlist) {      
       console.log('The watchlist is currently' + watchlist);
-      let arr = JSON.parse(watchlist);
-      arr.push(coin);
+      let arr = JSON.parse(watchlist); 
+         
+      if(!this.findObjectByKey(arr, 'NAME', coin.NAME)){
+        arr.push(coin);
+        console.log("The coin " + coin.NAME + " has been added!");
+      } else{
+        console.log("This coin is already in the list!");
+      }   
+
       list = JSON.stringify(arr);
       console.log('The list is now: ' + list);
       this.storage.set('watchlist', list);
-    }else {
+    } 
+    else {
       let arr = [];
       arr.push(coin);
       list = JSON.stringify(arr);
