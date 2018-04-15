@@ -15,6 +15,9 @@ export class ApiProvider {
   }
 
 
+  getAllCoins(){
+    return this.http.get('https://min-api.cryptocompare.com/data/all/coinlist');
+  }
   getTopCoins() {
     return this.http.get('https://min-api.cryptocompare.com/data/top/volumes?tsym=USD&limit=10');
   }

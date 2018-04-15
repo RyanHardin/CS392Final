@@ -18,8 +18,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-
-    <ion-card class="coins-card">
+  
+    <ion-card class="coins-card" ng-if="coins">
         <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
             <ion-list class="coins-list" *ngIf="coins">
               <ion-item-group>

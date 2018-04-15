@@ -9,6 +9,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { WatchListPage } from '../pages/watchlist/watchlist';
+import { Top20Page } from '../pages/top20/top20';
+
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -23,7 +25,8 @@ import { ApiProvider } from '../providers/api/api';
     ContactPage,
     HomePage,
     TabsPage,
-    WatchListPage
+    WatchListPage,
+    Top20Page
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { ApiProvider } from '../providers/api/api';
     ContactPage,
     HomePage,
     TabsPage,
-    WatchListPage
+    WatchListPage,
+    Top20Page
   ],
   providers: [
     StatusBar,

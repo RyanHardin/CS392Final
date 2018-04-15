@@ -3,31 +3,20 @@ import { NavController } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-top20',
+  templateUrl: 'top20.html'
 })
-export class HomePage {
+export class Top20Page {
 
-  coins: any[];
-  list: any;
+  coins: any;
   items: string[];
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-    let list = [];
-    setTimeout(() => {
-      this.ApiProvider.getAllCoins().subscribe((res: res) => {
-        let coins = res.Data;
-        console.log(coins);
-        for (var key in coins) {
-          console.log(key);
-          if (coins.hasOwnProperty(key)) {
-              //console.log(key + " -> " + coins[key]);
-              list.push({key: coins[key]});
-          }
 
-      }
-        this.coins = list;
+    setTimeout(() => {
+      this.ApiProvider.getTopCoins().subscribe((res: res) => {
+        this.coins = res.Data;
         console.log(this.coins);
        })
       console.log('Async operation has ended');
@@ -37,21 +26,11 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public ApiProvider: ApiProvider) {
     //this.initializedItems();
-    let list = [];
-    this.ApiProvider.getAllCoins().subscribe((res: res) => {
+    this.ApiProvider.getTopCoins().subscribe((res: res) => {
     //console.log(res.Data);
-    let coins = res.Data;
-    console.log(coins);
-    for (var key in coins) {
-      console.log(key);
-      if (coins.hasOwnProperty(key)) {
-          //console.log(key + " -> " + coins[key]);
-          list.push({key: coins[key]});
-      }
-  }
-  this.coins = list;
+    this.coins = res.Data;
+    console.log(this.coins);
    })
-   console.log(this.coins);
   }
 
   ionViewDidLoad() {
