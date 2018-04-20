@@ -9,28 +9,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
-  coins: any[];
-  list: any;
+  coins: any;
   items: string[];
-  gotCoins: boolean = false;
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-    let list = [];
-    setTimeout(() => {
-      this.ApiProvider.getAllCoins().subscribe((res: res) => {
-        let coins = res.Data;
-        //console.log(coins);
-        for (var key in coins) {
-          //console.log(key);
-          if (coins.hasOwnProperty(key)) {
-            //console.log(key + " -> " + coins[key]);
-            list[key] = coins[key];
-          }
 
-        }
-        this.coins = list;
+    setTimeout(() => {
+      this.ApiProvider.getTopCoins().subscribe((res: res) => {
+        this.coins = res.Data;
         console.log(this.coins);
       })
       console.log('Async operation has ended');
@@ -40,30 +27,15 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public ApiProvider: ApiProvider) {
     //this.initializedItems();
-    let list = [];
-    this.ApiProvider.getAllCoins().subscribe((res: res) => {
+    this.ApiProvider.getTopCoins().subscribe((res: res) => {
       //console.log(res.Data);
-      let coins = res.Data;
-      //console.log(coins);
-      for (var key in coins) {
-        //console.log(key);
-        if (coins.hasOwnProperty(key)) {
-          //console.log(coins[key]);
-          list[key] = coins[key];
-          console.log(coins[key].Name);
-        }
-      }
-      this.coins = list;
-      //console.log(this.coins);
-      this.gotCoins = true;
+      this.coins = res.Data;
+      console.log(this.coins);
     })
-    //console.log(this.coins);
   }
 
   ionViewDidLoad() {
-    //console.log(this.coins);
-    this.gotCoins = true;
-    //console.log(this.coins['BTC']);
+
   }
 
   navigateToCoinDetailsPage(coin) {
@@ -72,8 +44,28 @@ export class HomePage {
     this.navCtrl.push('CoinDetailsPage', { 'coin': coin });
   }
 
+  /**initializedItems(){
+  this.items = this.coins.filter(function( obj ) {
+      return obj.name;
+    });
+
+}
+
+  getItems(ev: any){
+    this.initializedItems();
+
+    let val = ev.target.value;
+
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }**/
+
 }
 export interface res {
   Data: any[];
+
 
 }
