@@ -51,6 +51,14 @@ export class WatchListPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WatchlistPage');
+    this.storage.get('watchlist').then((watchlist) => {
+      if(watchlist) {
+        console.log('The watchlist is currently' + watchlist);
+        this.coins = JSON.parse(watchlist);
+      }else {
+        this.nocoins = true;
+      }
+    })
   }
 
   navigateToCoinDetailsPage(coin) {
